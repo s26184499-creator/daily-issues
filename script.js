@@ -324,20 +324,53 @@ const product={
     ],
   },
 }
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded", function () {
   const page = window.location.pathname.split("/").pop();
-  if(page==="singleProduct.html"){
-    renderProductDetails()
-    addToCart()
+
+  const pageActions = {
+    "singleProduct.html": () => {
+      renderProductDetails();
+      addToCart();
+    },
+    "signup.html": register,
+    "login.html": login,
+    "feedback.html": setupFeedbackForm // new
+  };
+
+  if (pageActions[page]) {
+    pageActions[page]();
   }
-  else if(page==="signup.html"){
-    register()
-  }
-  else if(page==="login.html"){
-    login()
-  }
-  updateLoginStatus()
-})
+
+  updateLoginStatus();
+});
+
+// ===== Feedback form & star rating setup =====
+function setupFeedbackForm() {
+  const feedbackForm = document.getElementById("feedbackForm");
+  const ratingInput = document.getElementById("rating");
+  const stars = document.querySelectorAll(".star");
+
+  // Star click event
+  stars.forEach((star) => {
+    star.addEventListener("click", function () {
+      const rating = this.getAttribute("data-rating");
+      ratingInput.value = rating;
+
+      stars.forEach((s, index) => {
+        s.style.color = index < rating ? "gold" : "#333";
+      });
+    });
+  });
+
+  // Reset form event
+  feedbackForm.addEventListener("reset", () => {
+    ratingInput.value = 0;
+    stars.forEach((s) => {
+      s.style.color = "#333"; // reset color
+    });
+  });
+}
+
 function renderProductDetails() {
   const id = new URLSearchParams(window.location.search).get("id");
   
@@ -453,3 +486,16 @@ submit.addEventListener("click",(Event)=>{
   Event.preventDefault()
   alert("Thank you for your Feedback!")
 })
+
+// Handle form reset to reset star colors
+const feedbackForm = document.getElementById("feedbackForm");
+
+feedbackForm.addEventListener("reset", () => {
+  // Set hidden rating input back to 0
+  ratingInput.value = 0;
+
+  // Reset all stars to default color
+  stars.forEach((s) => {
+    s.style.color = "#333"; // unfilled color
+  });
+});

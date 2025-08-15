@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Reset & basic styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f5f7fa;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px;
+      }
+
+      /* Payment container layout */
+      .payment-container {
+        display: flex;
+        gap: 30px;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 100%;
+      }
+
+      /* Payment form */
+      .payment-form {
+        flex: 2;
+      }
+
+      .payment-form h2 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+
+      .card-type {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #888;
+      }
+
+      .btn {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .btn:hover {
+        background: #0056b3;
+      }
+
+      /* Summary section */
+      .summary {
+        flex: 1;
+        border-left: 1px solid #eee;
+        padding-left: 20px;
+      }
+
+      .summary h3 {
+        margin-bottom: 15px;
+        color: #2c3e50;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 16px;
+      }
+
+      .summary-item.total {
+        font-weight: bold;
+        border-top: 2px solid #ddd;
+        padding-top: 10px;
+      }
+
+      /* Popup success message */
+      .popup {
+        position: fixed;
+        top: 20px;
+        right: -300px;
+        background: #4caf50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: right 0.5s ease;
+      }
+
+      .popup.show {
+        right: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .payment-container {
+          flex-direction: column;
+        }
+
+        .summary {
+          border-left: none;
+          padding-left: 0;
+          margin-top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="receipt-container">
+      <h2>Payment Receipt</h2>
+      <p id="receipt-date"></p>
+
+      <table id="receipt-table">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price (each)</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="totals">
+        <p>Item Total: $<span id="item-total"></span></p>
+        <p>Shipping: $<span id="shipping"></span></p>
+        <p>
+          <strong>Final Total: $<span id="final-total"></span></strong>
+        </p>
+      </div>
+      <div style="text-align: right; margin-top: 15px">
+        <button
+          onclick="window.print()"
+          style="
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          Print Receipt
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const receipt = JSON.parse(localStorage.getItem("lastReceipt"));
+
+        if (!receipt) {
+          document.body.innerHTML = "<h2>No recent receipt found.</h2>";
+          return;
+        }
+
+        // Display date
+        document.getElementById(
+          "receipt-date"
+        ).textContent = `Date: ${receipt.date}`;
+
+        // Table body
+        const tbody = document.querySelector("#receipt-table tbody");
+        receipt.items.forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.quantity}</td>
+      <td>$${item.price.toFixed(2)}</td>
+      <td>$${(item.price * item.quantity).toFixed(2)}</td>
+    `;
+          tbody.appendChild(row);
+        });
+
+        // Totals
+        document.getElementById("item-total").textContent = receipt.itemTotal;
+        document.getElementById("shipping").textContent = receipt.shipping;
+        document.getElementById("final-total").textContent = receipt.total;
+      });
+    </script>
+  </body>
+</html>
