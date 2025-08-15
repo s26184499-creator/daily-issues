@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receipt</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: #f4f4f4;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .receipt-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 700px;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background: #007bff;
+        color: white;
+      }
+      .totals {
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="receipt-container">
+      <h2>Payment Receipt</h2>
+      <p id="receipt-date"></p>
+
+      <table id="receipt-table">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price (each)</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="totals">
+        <p>Item Total: $<span id="item-total"></span></p>
+        <p>Shipping: $<span id="shipping"></span></p>
+        <p>
+          <strong>Final Total: $<span id="final-total"></span></strong>
+        </p>
+      </div>
+      <div style="text-align: right; margin-top: 15px">
+        <button
+          onclick="window.print()"
+          style="
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          Print Receipt
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const receipt = JSON.parse(localStorage.getItem("lastReceipt"));
+
+        if (!receipt) {
+          document.body.innerHTML = "<h2>No recent receipt found.</h2>";
+          return;
+        }
+
+        // Display date
+        document.getElementById(
+          "receipt-date"
+        ).textContent = `Date: ${receipt.date}`;
+
+        // Table body
+        const tbody = document.querySelector("#receipt-table tbody");
+        receipt.items.forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.quantity}</td>
+      <td>$${item.price.toFixed(2)}</td>
+      <td>$${(item.price * item.quantity).toFixed(2)}</td>
+    `;
+          tbody.appendChild(row);
+        });
+
+        // Totals
+        document.getElementById("item-total").textContent = receipt.itemTotal;
+        document.getElementById("shipping").textContent = receipt.shipping;
+        document.getElementById("final-total").textContent = receipt.total;
+      });
+    </script>
+  </body>
+</html>
