@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="style.css" />
     <style>
       body {
+        margin: 0px;
         background: #f4f4f4;
         font-family: Arial, sans-serif;
-        padding: 20px;
+        /* padding: 20px; */
       }
       .receipt-container {
         background: #fff;
@@ -46,6 +47,22 @@
     </style>
   </head>
   <body>
+     <header>   
+    <div class="nav">
+        <img src="logo.png" class="logoImage">
+        <h1>Electronic Zone</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="login.html" id="loginLink">Login</a></li>
+            </div>
+        </ul>
+    </nav>
+</header>
+<br>
     <div class="receipt-container">
       <h2>Payment Receipt</h2>
       <p id="receipt-date"></p>
@@ -119,5 +136,6 @@
         document.getElementById("final-total").textContent = receipt.total;
       });
     </script>
+    <script src="script.js"></script>
   </body>
 </html>

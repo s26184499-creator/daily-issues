@@ -17,14 +17,16 @@ function login() {
 
     // Validation
     if (username.length < 6) {
-      document.getElementById("NameError").textContent = "Name must be at least 6 characters";
+      document.getElementById("NameError").textContent =
+        "Name must be at least 6 characters";
       valid = false;
     } else {
       document.getElementById("NameError").textContent = "";
     }
 
     if (password.length < 6) {
-      document.getElementById("passwordError").textContent = "Password must be at least 6 characters";
+      document.getElementById("passwordError").textContent =
+        "Password must be at least 6 characters";
       valid = false;
     } else {
       document.getElementById("passwordError").textContent = "";
@@ -33,7 +35,7 @@ function login() {
     if (!valid) return;
 
     // const storedUser = localStorage.getItem(username);
-const storedUser = JSON.parse(localStorage.getItem(username));
+    const storedUser = JSON.parse(localStorage.getItem(username));
     if (!storedUser) {
       alert("No account found. Please register.");
       return;
@@ -48,8 +50,7 @@ const storedUser = JSON.parse(localStorage.getItem(username));
     }
   });
 }
-function register(){
-  
+function register() {
   const form = document.getElementById("registerForm");
   if (!form) return;
 
@@ -59,57 +60,64 @@ function register(){
     const username = document.getElementById("Register-Username").value.trim();
     const email = document.getElementById("Register-Email").value.trim();
     const password = document.getElementById("Register-Password").value;
-    const confirmPassword = document.getElementById("Register-Confirmpassword").value;
+    const confirmPassword = document.getElementById(
+      "Register-Confirmpassword"
+    ).value;
 
-    if (username === "" || password === "" || email===""||confirmPassword==="") {
+    if (
+      username === "" ||
+      password === "" ||
+      email === "" ||
+      confirmPassword === ""
+    ) {
       alert("Please fill in everything");
       return;
     }
     let valid = true;
-    
-    document.getElementById("NameError").textContent =username.name>=6
-      username.length >= 6 ? "" : "Name must be at least 6 characters";
-  
-     valid= valid && username.length >= 6;
+
+    document.getElementById("NameError").textContent = username.name >= 6;
+    username.length >= 6 ? "" : "Name must be at least 6 characters";
+
+    valid = valid && username.length >= 6;
 
     // ^=start a string;  [^\S@]= S means space and @ not allowed; +=combine; @=@ compulsory; [^\S@]= S means space and @ not allowed; \.=. is compulsory
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    document.getElementById("emailError").textContent =
-      emailRegex.test(email) ? "" : "Invalid email format";
-    valid=valid && emailRegex.test(email);
+    document.getElementById("emailError").textContent = emailRegex.test(email)
+      ? ""
+      : "Invalid email format";
+    valid = valid && emailRegex.test(email);
 
-   
     document.getElementById("passwordError").textContent =
       password.length >= 6 ? "" : "Password must be at least 6 characters";
-    valid=valid && password.length >= 6;
+    valid = valid && password.length >= 6;
 
     document.getElementById("confirmPasswordError").textContent =
-      password === confirmPassword ? "" : "Confirm password doesn't match password";
-    valid=valid && password === confirmPassword;
+      password === confirmPassword
+        ? ""
+        : "Confirm password doesn't match password";
+    valid = valid && password === confirmPassword;
 
     if (!valid) return;
-
-
 
     if (localStorage.getItem(email)) {
       alert("Already registered with this email");
       return;
     }
-const user={
-  username:username,
-  email:email,
-  password:password,
-  confirmPassword:confirmPassword
-}
-  
+    const user = {
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    };
+
     localStorage.setItem(username, JSON.stringify(user));
     alert("Registered Successfully!");
     window.location.href = "login.html";
-  })
+  });
 }
 
-const product={
-    1: {
+const product = {
+  1: {
     name: "Latest Smartphone",
     price: "$799",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=Smartphone",
@@ -138,9 +146,7 @@ const product={
     ],
   },
 
-
-
-2: {
+  2: {
     name: "Gaming Laptop",
     price: "$1299",
     image: "https://via.placeholder.com/500x400/2196F3/white?text=Laptop",
@@ -242,8 +248,7 @@ const product={
     name: "PC",
     price: "$999",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=PC",
-    description:
-      "Strong computer that holds lots of data",
+    description: "Strong computer that holds lots of data",
     features: [
       "holds 10 gigabytes",
       "Big screen",
@@ -254,8 +259,7 @@ const product={
     name: "DVD Player",
     price: "$99",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=DVDPlayer",
-    description:
-      "Can play DVD Disc",
+    description: "Can play DVD Disc",
     features: [
       "unlimited uses",
       "One disc at a time",
@@ -266,33 +270,21 @@ const product={
     name: "DVD Disc",
     price: "$49",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=DVDDisc",
-    description:
-      "Can hold video recordings",
-    features: [
-      "Small",
-      "hold up to 3 hours of footage",
-      "unlimited uses",
-    ],
+    description: "Can hold video recordings",
+    features: ["Small", "hold up to 3 hours of footage", "unlimited uses"],
   },
   12: {
     name: "Computer Mouse",
     price: "$39",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=Mouse",
-    description:
-      "Can control cursor on computers",
-    features: [
-      "Small",
-      "can control anytime",
-      "Has a scroll wheel",
-      
-    ],
+    description: "Can control cursor on computers",
+    features: ["Small", "can control anytime", "Has a scroll wheel"],
   },
   13: {
     name: "Fan",
     price: "$199",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=Fan",
-    description:
-      "Can keep you chilly",
+    description: "Can keep you chilly",
     features: [
       "Makes a lot of wind",
       "lasts 1 hour with full charge",
@@ -303,27 +295,17 @@ const product={
     name: "Lamp",
     price: "$599",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=Lamp",
-    description:
-      "Gives you light",
-    features: [
-      "Very Bright",
-      "Lasts 2 hour",
-      "Lights up on command",
-    ],
+    description: "Gives you light",
+    features: ["Very Bright", "Lasts 2 hour", "Lights up on command"],
   },
   15: {
     name: "Charging Cord",
     price: "$29",
     image: "https://via.placeholder.com/500x400/4CAF50/white?text=ChargingCord",
-    description:
-      "Can charge your phone",
-    features: [
-      "Fast Charging",
-      "Portable",
-      "Charge many Phones",
-    ],
+    description: "Can charge your phone",
+    features: ["Fast Charging", "Portable", "Charge many Phones"],
   },
-}
+};
 document.addEventListener("DOMContentLoaded", function () {
   const page = window.location.pathname.split("/").pop();
 
@@ -334,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     "signup.html": register,
     "login.html": login,
-    "feedback.html": setupFeedbackForm // new
+    "feedback.html": setupFeedbackForm, // new
   };
 
   if (pageActions[page]) {
@@ -344,56 +326,27 @@ document.addEventListener("DOMContentLoaded", function () {
   updateLoginStatus();
 });
 
-// ===== Feedback form & star rating setup =====
-function setupFeedbackForm() {
-  const feedbackForm = document.getElementById("feedbackForm");
-  const ratingInput = document.getElementById("rating");
-  const stars = document.querySelectorAll(".star");
-
-  // Star click event
-  stars.forEach((star) => {
-    star.addEventListener("click", function () {
-      const rating = this.getAttribute("data-rating");
-      ratingInput.value = rating;
-
-      stars.forEach((s, index) => {
-        s.style.color = index < rating ? "gold" : "#333";
-      });
-    });
-  });
-
-  // Reset form event
-  feedbackForm.addEventListener("reset", () => {
-    ratingInput.value = 0;
-    stars.forEach((s) => {
-      s.style.color = "#333"; // reset color
-    });
-  });
-}
-
 function renderProductDetails() {
   const id = new URLSearchParams(window.location.search).get("id");
-  
-  const singleProduct = product?.[id]; // Ensure 'product' is defined
 
+  const singleProduct = product?.[id]; // Ensure 'product' is defined
 
   if (!singleProduct) return;
 
-
   document.getElementById("productName").textContent = singleProduct.name;
   document.getElementById("productPrice").textContent = singleProduct.price;
-  document.getElementById("productDescription").textContent = singleProduct.description;
+  document.getElementById("productDescription").textContent =
+    singleProduct.description;
 
-
-  const imageURL = new URLSearchParams(window.location.search).get("img") || singleProduct.image;  //blaa blaa blaa
+  const imageURL =
+    new URLSearchParams(window.location.search).get("img") ||
+    singleProduct.image; //blaa blaa blaa
   const productImage = document.getElementById("productImage");
   productImage.src = imageURL;
   productImage.alt = singleProduct.name;
 
-
   const featuresList = document.getElementById("productFeatures");
   featuresList.innerHTML = "";
-
 
   // Fixed: Should use singleProduct.features
   singleProduct.features.forEach((feature) => {
@@ -403,99 +356,161 @@ function renderProductDetails() {
   });
 }
 
-function updateLoginStatus(){
-   const user = JSON.parse(localStorage.getItem("loggedInUser"));
-   const loginLink=document.getElementById("loginLink")
-    if(user&&loginLink){
-      loginLink.textContent=user.username
-      loginLink.href="#"
-      loginLink.addEventListener("click",(e)=>{
-        e.preventDefault()
-        if(confirm("Logout?")){
-          localStorage.removeItem("loggedInUser")
-          window.location.href = "login.html";
-        }
-      })
-    }
-   
+function updateLoginStatus() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const loginLink = document.getElementById("loginLink");
+  if (user && loginLink) {
+    loginLink.textContent = user.username;
+    loginLink.href = "#";
+    loginLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (confirm("Logout?")) {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+    });
+  } else {
+    // User is NOT logged in → show "Login"
+    loginLink.textContent = "Login";
+    loginLink.href = "login.html";
+    loginLink.onclick = null; // remove any old handler
+  }
 }
-function addToCart(){
-  let btn=document.getElementById("addToCartBtn")
-  if(!btn)return
+function addToCart() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  let btn = document.getElementById("addToCartBtn");
+  if (!btn) return;
   btn.addEventListener("click", () => {
     const id = new URLSearchParams(window.location.search).get("id");
     const selectedProduct = product?.[id];
-    if(!selectedProduct){
-      alert("Product Not Found")
-      return
+    if (!user) {
+      // Not logged in → redirect to login page
+      alert("Please log in to add items to your cart.");
+      // window.location.href = "login.html";
+      return ;
+    }
+    if (!selectedProduct) {
+      alert("Product Not Found");
+      return;
     }
     const qty = parseInt(document.getElementById("quantity").value) || 1;
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existing = cart.find(item => item.id === id);
-    if(existing){
-      existing.quantity+=qty
-    }
-else {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find((item) => item.id === id);
+    if (existing) {
+      existing.quantity += qty;
+    } else {
       cart.push({
         id,
         name: selectedProduct.name,
         price: parseFloat(selectedProduct.price.replace("$", "")),
         image: selectedProduct.image,
-        quantity: qty
+        quantity: qty,
       });
     }
-
 
     localStorage.setItem("cart", JSON.stringify(cart));
     alert(`${qty} x ${selectedProduct.name} added to cart!`);
   });
-    
-    
 }
-const stars=document.querySelectorAll(".star")
-const rating=document.getElementById("rating")
-stars.forEach((star)=>{
-  star.addEventListener("click",()=>{
-    let ratingValue=star.getAttribute("data-rating")
-    rating.value=ratingValue
-    stars.forEach((s,index)=>{
-      if(index<ratingValue){
-        s.style.color="#bfc22a"
-      }
-      else{
-        s.style.color="#333"
-      }
-    })
-      localStorage.setItem("rating",ratingValue)
-    })
-    star.addEventListener("mouseenter", ()=>{
-      let hoverValue=star.getAttribute("data-rating")
-      stars.forEach((s,index)=>{
-        s.style.color=index<hoverValue? "#bfc22a": "#333"
-      })
-    })
-    star.addEventListener("mouseleave", ()=>{
-      let crunchRating=rating.value
-      stars.forEach((s,index)=>{
-        s.style.color=index<crunchRating? "#bfc22a": "#333"
-    })
-  })
-})
-const submit=document.querySelector(".submit-btn")
-submit.addEventListener("click",(Event)=>{
-  Event.preventDefault()
-  alert("Thank you for your Feedback!")
-})
 
-// Handle form reset to reset star colors
-const feedbackForm = document.getElementById("feedbackForm");
+function setupFeedbackForm() {
+  const form = document.getElementById("feedbackForm");
+  if (!form) return;
 
-feedbackForm.addEventListener("reset", () => {
-  // Set hidden rating input back to 0
-  ratingInput.value = 0;
+  const submitBtn = document.getElementById("submit-btn");
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const messageField = document.getElementById("message");
+  const checkbox = document.getElementById("newsletter");
 
-  // Reset all stars to default color
-  stars.forEach((s) => {
-    s.style.color = "#333"; // unfilled color
+  const ratingInput = document.getElementById("rating");
+  const stars = document.querySelectorAll(".star");
+
+  // Disable submit initially
+  disableButton(submitBtn);
+
+  // Validation check
+  function checkFormValidity() {
+    const nameValid = nameField.value.trim().length > 0;
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+      emailField.value.trim()
+    );
+    const messageValid = messageField.value.trim().length > 0;
+    const checkboxChecked = checkbox.checked;
+
+    if (nameValid && emailValid && messageValid && checkboxChecked) {
+      enableButton(submitBtn);
+    } else {
+      disableButton(submitBtn);
+    }
+  }
+
+  // Add input listeners
+  [nameField, emailField, messageField, checkbox].forEach((el) =>
+    el.addEventListener("input", checkFormValidity)
+  );
+  checkbox.addEventListener("change", checkFormValidity);
+
+  // ==================
+  // STAR RATING LOGIC
+  // ==================
+  stars.forEach((star) => {
+    star.addEventListener("click", function () {
+      const rating = this.getAttribute("data-rating");
+      ratingInput.value = rating;
+
+      stars.forEach((s, index) => {
+        s.style.color = index < rating ? "gold" : "#333";
+      });
+
+      localStorage.setItem("rating", rating);
+    });
+
+    // Hover effect
+    star.addEventListener("mouseenter", function () {
+      let hoverValue = this.getAttribute("data-rating");
+      stars.forEach((s, index) => {
+        s.style.color = index < hoverValue ? "gold" : "#333";
+      });
+    });
+
+    star.addEventListener("mouseleave", function () {
+      let savedRating = ratingInput.value;
+      stars.forEach((s, index) => {
+        s.style.color = index < savedRating ? "gold" : "#333";
+      });
+    });
   });
-});
+
+  // Feedback submit
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("✅ Thank you for your Feedback!");
+    form.reset();
+    checkFormValidity(); // disable again after reset
+  });
+
+  // Reset feedback form
+  form.addEventListener("reset", () => {
+    ratingInput.value = 0;
+    stars.forEach((s) => (s.style.color = "#333"));
+    localStorage.removeItem("rating");
+    checkFormValidity();
+  });
+
+  // Run once at start
+  checkFormValidity();
+}
+
+// Utility
+function disableButton(btn) {
+  btn.disabled = true;
+  btn.style.opacity = "0.6";
+  btn.style.cursor = "not-allowed";
+}
+
+function enableButton(btn) {
+  btn.disabled = false;
+  btn.style.opacity = "1";
+  btn.style.cursor = "pointer";
+}

@@ -1,31 +1,39 @@
-const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-const tbody = document.querySelector(".cartTable tbody");
-const totalDisplay = document.getElementById("cartTotal");
+document.addEventListener("DOMContentLoaded", () => {
+  const cartTableBody = document.querySelector("#cartTable tbody");
+  const cartTotalEl = document.getElementById("cartTotal");
+  const checkoutBtn = document.querySelector(".checkoutButton");
 
+  // Load cart from localStorage
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let total = 0;
+  // Disable checkout button if cart is empty
+  if (cart.length === 0) {
+    checkoutBtn.classList.add("disabled");
+    checkoutBtn.style.pointerEvents = "none"; // prevent clicking
+    checkoutBtn.style.opacity = "0.5"; // dim it
+  } else {
+    checkoutBtn.classList.remove("disabled");
+    checkoutBtn.style.pointerEvents = "auto";
+    checkoutBtn.style.opacity = "1";
+  }
 
+  let total = 0;
 
-if (cartItems.length === 0) {
-  tbody.innerHTML =
-    '<tr><td colspan="5" style="text-align:center; padding: 2rem;">Your cart is empty.</td></tr>';
-} else {
-  cartItems.forEach((item) => {
-    const subtotal = item.quantity * item.price;
+  // Render cart items
+  cart.forEach((item) => {
+    const subtotal = item.price * item.quantity;
     total += subtotal;
 
-
     const row = document.createElement("tr");
-    
     row.innerHTML = `
-          <td>${item.name}</td>
-          <td>$${item.price.toFixed(2)}</td>
-          <td>${item.quantity}</td>
-          <td>$${subtotal.toFixed(2)}</td>
-        `;
-    tbody.appendChild(row);
+      <td>${item.name}</td>
+      <td>$${item.price.toFixed(2)}</td>
+      <td>${item.quantity}</td>
+      <td>$${subtotal.toFixed(2)}</td>
+    `;
+    cartTableBody.appendChild(row);
   });
-}
 
-
-totalDisplay.textContent = `$${total.toFixed(2)}`;
+  // Update total
+  cartTotalEl.textContent = `$${total.toFixed(2)}`;
+});
